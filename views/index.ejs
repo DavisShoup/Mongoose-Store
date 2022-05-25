@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<%- include('./partials/head.ejs') %>
+	<body>
+		<div class="container">
+		<%- include('./partials/header.ejs') %>
+				<% products.forEach(product => { %>
+				<div class="product">
+					<a href="/products/<%=product._id %>"> <img class="image" src="<%=product.img%>"></a>
+                	<a class="name" href="/products/<%=product._id%>"> <%=product.name%> </a>
+				</div>
+				<%}) %>	
+			</div>
+	</body>
+</html>

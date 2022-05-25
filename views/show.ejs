@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <div class="create">
+        <h1><%= product.name %></h1>
+        <a href="/products"><img src="<%= product.img %>"></a>
+        <ul>
+            <li>Price: $<%= product.price%> </li>
+            <li>Info: <%= product.description%></li>
+            <li>Quantity in stock: <%= product.qty%> </li>  
+        </ul>
+        <%if(product.qty > 0) {%>
+        <form action="/products/<%=product._id %>?_method=PATCH" method="POST">
+            <input class="formbutton" type="submit" value="Buy">
+        </form>
+        <%} else {%>
+        <button class="outofstock">OUT OF STOCK</button>
+    <%}%>
+    <a href="/products/<%=product._id %>/edit"><button class="formbutton">Edit</button></a>
+        <form action="/products/<%=product._id %>?_method=DELETE" method="POST">
+            <input class="formbutton" type="submit" value="Delete"/>
+        </form> 
+    </div>
+</body>
+</html>

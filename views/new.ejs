@@ -4,18 +4,16 @@
 <body>
     <%- include('./partials/header.ejs') %> 
 <div class="create">
-<table>
     <form action="/products" method="POST">
         <a href="/products"> <img class="image" src="https://hardyfoods.com/wp/wp-content/uploads/2019/05/new-item-photo.png"></a>
         Image URL:</br>
-        <tr><input class="url" type="text" name="img" placeholder="Image URL" value="https://hardyfoods.com/wp/wp-content/uploads/2019/05/new-item-photo.png"/></tr>
-        <td><input type="text" name="name" placeholder="Name" /> <br/></td>
-        <td><input type="text" name="description" placeholder="Description"/> <br/></td>
-        <td><input type="text" name="price" placeholder="Price"/> <br/></td>
-        <td><input type="text" name="qty" placeholder="Quantity"/><br/></td>
-        <td><input class="formbutton1" type="submit" value="Create"/><br/></td>
-    </form>
-</table>  
+        <input class="url" type="text" name="img" placeholder="Image URL" value="https://hardyfoods.com/wp/wp-content/uploads/2019/05/new-item-photo.png"/>
+        <input type="text" name="name" placeholder="Name"/>
+        <input type="text" name="description" placeholder="Description"/>
+        <input type="text" name="price" placeholder="Price"/>
+        <input type="text" name="qty" placeholder="Quantity"/>
+        <input class="formbutton1" type="submit" value="Create"/>
+    </form> 
 </div>
 </body>
 </html>

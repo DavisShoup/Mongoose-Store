@@ -14,8 +14,6 @@ mongoose.connect(process.env.DATABASE_URL, {
 	useUnifiedTopology: true
 });
 
-
-
 //MIDDLEWARE & BODY PARSER
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
@@ -53,13 +51,25 @@ app.delete("/products/:id", (req,res) => {
 })
 
 //UPDATE
+app.put('/products/:id', (req, res) => {
+    Product.findByIdAndUpdate(
+        req.params.id, 
+        req.body, 
+        {
+            new: true,
+        },
+        (error, updateProduct) => {
+    res.redirect(`/products/${req.params.id}`)
+    });
+});
 
 app.patch('/products/:id', (req, res) => {
-    Product.findById(req.params.id, (error, updateQty) => {
+    Product.findById(req.params.id, req.body, (error, updateQty) => {
         updateQty.qty = updateQty.qty - 1;
         updateQty.save();
     });
-    res.redirect(`/products/${req.params.id}`)
+    // res.redirect(`/products/${req.params.id}`);
+    res.redirect(`/products`);
 });
 
 

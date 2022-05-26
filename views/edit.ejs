@@ -5,7 +5,7 @@
     <%- include('./partials/header.ejs') %>
     <div class="create">
     <a href="/products/<%=product._id %>"> <img class="image" src="<%=product.img%>"></a>
-    <form action="/products/<%=product._id%>?_method=PUT" method="POST">
+    <form action="/products/<%=product._id%>/?_method=PUT" method="POST">
       <!--  NOTE: the form is pre-populated with values for the server-->
       Name: <input type="text" name="name" value="<%=product.name%>"/></br>
       Price: <input type="text" name="price" value="<%=product.price%>"/></br>

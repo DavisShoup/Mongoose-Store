@@ -12,7 +12,7 @@
             <li>Quantity in stock: <%= product.qty%> </li>  
         </ul>
         <%if(product.qty > 0) {%>
-        <form action="/products/<%=product._id %>?_method=PATCH" method="POST">
+        <form action="/products/<%=product._id %>/buy/?_method=PATCH" method="POST">
             <input class="formbutton" type="submit" value="Buy">
         </form>
         <%} else {%>

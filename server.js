@@ -1,105 +1,25 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-const Product = require('./models/products.js');
 const mongoose = require('mongoose');
-const seedData = require('./models/seedData');
 const PORT = process.env.PORT
 const methodOverride = require("method-override");
 const { redirect } = require('express/lib/response');
+const productStore = require('./controllers/products.js')
 
 // Database Connection
+
 mongoose.connect(process.env.DATABASE_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
 
 //MIDDLEWARE & BODY PARSER
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
-
-
-//SEED
-app.get('/products/seed', (req,res) => {
-    Product.deleteMany({}, (error, allProducts) => {});
-    Product.create(seedData, (error,data) => {
-        res.redirect('/products');
-    });
-});
-
-//INDEX
-app.get('/products', (req, res) => {
-    Product.find({}, (error, allProducts) => {
-        res.render('index.ejs', {
-            products: allProducts,
-        });
-    });
-});
-
-//NEW
-
-app.get('/products/new', (req, res) => {
-    res.render('new.ejs');
-})
-
-//DELETE
-app.delete("/products/:id", (req,res) => {
-    Product.findByIdAndRemove(req.params.id, (error, deleteProduct) => {
-        res.redirect("/products");
-    })  
-})
-
-//UPDATE
-app.put('/products/:id', (req, res) => {
-    Product.findByIdAndUpdate(
-        req.params.id, 
-        req.body, 
-        {
-            new: true,
-        },
-        (error, updateProduct) => {
-    res.redirect(`/products/${req.params.id}`)
-    });
-});
-
-app.patch('/products/:id', (req, res) => {
-    Product.findById(req.params.id, req.body, (error, updateQty) => {
-        updateQty.qty = updateQty.qty - 1;
-        updateQty.save();
-    });
-    // res.redirect(`/products/${req.params.id}`);
-    res.redirect(`/products`);
-});
-
-
-//CREATE
-
-app.post('/products', (req, res) => {
-    Product.create(req.body, (error, createdProduct) => {
-        res.redirect('/products')
-	});
-});
-
-//EDIT
-app.get('/products/:id/edit', (req, res) => {
-    Product.findById(req.params.id, (error, editProduct) => {
-        res.render('edit.ejs', {
-            product: editProduct
-        });
-    });
-});
-
-
-//SHOW
-
-app.get('/products/:id', (req, res) => {
-    Product.findById(req.params.id, (err, foundProduct) => {
-        res.render('show.ejs', {
-            product: foundProduct
-        });
-    });
-});
+app.use('/products', productStore)
 
 //LISTENING
 
